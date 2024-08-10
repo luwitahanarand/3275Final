@@ -1,0 +1,108 @@
+<!-- This is the main HTML page for the application showing the sales summary-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Sales summary</title>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--
+    <script th:inline="javascript">
+        var u = [[${session.a}]];
+        if(u==1){
+            alert('One record added');
+        }
+    </script>
+    -->
+    <script th:inline="javascript">
+        var u = [[${session.e}]];
+        if(u==2){
+            alert('One record edited');
+        }
+    </script>
+    <style>
+        .pre-scrollable{
+            height:500px;
+            overflow-y: scroll;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Savings Investment Record</h1>
+    <div class="container mt-2 pre-scrollable">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <div style="background-color: #ADD8E6; padding: 20px; border-radius: 10px;">
+                <form method="post" th:action="@{save}">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="salesman">Salesman:</label>
+                                <input type="text" class="form-control" id="salesman" name="salesman">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="item">Item:</label>
+                                <select class="form-control" id="item" name="item">
+                                    <option value="">Select Item</option>
+                                    <option value="Item 1">Washing machine</option>
+                                    <option value="Item 2">Refrigerator</option>
+                                    <option value="Item 3">Music System</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="amount">Amount:</label>
+                                <input type="number" class="form-control" id="amount" name="amount">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="date">Date:</label>
+                                <input type="date" class="form-control" id="date" name="date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                    <a class="btn btn-primary" onClick="return confirm('Feature in development. Check back soon!')" th:href="@{/index}">Save</a>
+                    </div>
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Transaction code</th><th>Salesman</th><th>Item</th><th>Amount</th><th>Transaction date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="p:${listSales}">
+                    <td th:text="${p.getId()}"></td>
+                    <td th:text="${p.getSalesman()}"></td>
+                    <td th:text="${p.getItem()}"></td>
+                    <td th:text="${p.getAmount()}"></td>
+                    <td th:text="${p.getTransactionDate()}"></td>
+                    <td>
+                        <a class="btn btn-danger" onClick="return confirm('Are you sure you want to delete the record?')" th:href="@{delete(id=${p.id})}">Delete</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{editSales(id=${p.id})}">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
