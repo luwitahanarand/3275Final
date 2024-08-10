@@ -1,1 +1,1 @@
-# 3275Final
+# This program displays and stores sales records. Each record has a transaction code, salesman, item, amount, and transaction date attributed to it. Records can be edited and deleted. Adding records is a feature that is coming soon! 
